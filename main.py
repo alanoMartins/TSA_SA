@@ -16,7 +16,7 @@ def load_file():
 
 if __name__ == '__main__':
     coordinates = load_file()
-    simulated_annealing = SimulatedAnnealing(coordinates, max_interations=5000)
+    simulated_annealing = SimulatedAnnealing(coordinates, max_interations=50000)
     solution, costs = simulated_annealing.execute()
 
     painter = Painter()
