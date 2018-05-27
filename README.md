@@ -1,6 +1,7 @@
-# cut2d-sa
+# Traveling salesman problem using Simulated Annealing
 
-Para executar:
+## Install dependecies
+pip install -r requirements.txt
 
-$ ./cut2d.py < input/cut1.txt
-
+## Run
+python main.py < input/dataset.txt
