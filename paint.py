@@ -14,11 +14,13 @@ class Painter():
         self.plot_coords(coords)
         self.plotTSP([best_solution], coords)
         plt.savefig(self.path + '/path.png')
-        plt.show()
+        # plt.show()
 
     def plot_coords(self, coords):
         plt.subplot(2, 1, 1)
         x, y = zip(*coords)
+        plt.xlim(min(x) * 1.3, max(x) * 1.3)
+        plt.ylim(min(y) * 1.3, max(y) * 1.3)
         plt.scatter(x, y)
 
     def plot_costs(self, costs):
@@ -28,7 +30,7 @@ class Painter():
         plt.ylabel('Costs')
         plt.xlabel('Execution')
         fig.savefig(self.path + '/cost.png')
-        plt.show()
+        # plt.show()
 
     def plotTSP(self, paths, points):
         plt.subplot(2, 1, 2)
@@ -42,6 +44,6 @@ class Painter():
         plt.plot(x, y, color='b')
         plt.scatter(x, y, color='r')
 
-        plt.xlim(min(x) * 1.1, max(x) * 1.1)
-        plt.ylim(min(y) * 1.1, max(y) * 1.1)
+        plt.xlim(min(x) * 1.3, max(x) * 1.3)
+        plt.ylim(min(y) * 1.3, max(y) * 1.3)
 
