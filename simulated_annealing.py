@@ -1,9 +1,10 @@
 import math
 from random import uniform, choice, randint
+import random
 
 
 class SimulatedAnnealing(object):
-    def __init__(self, coords, alpha=0.995, min_temperature=0.00000001, max_interations=1000):
+    def __init__(self, coords, alpha=0.9995, min_temperature=0.000000001, max_interations=1000):
         self.num_nodes = len(coords)
         self.alpha = alpha
         self.min_temperature = min_temperature
@@ -20,19 +21,42 @@ class SimulatedAnnealing(object):
         return math.sqrt(self.num_nodes)
 
     def initial_solution(self):
-        node = choice(self.nodes)
-        solution = [node]
+        '''
+        Computes the initial solution (nearest neighbour strategy)
+        '''
+        node = random.randrange(len(self.distances))
+        result = []
 
-        nodes = list(self.nodes)
-        nodes.remove(node)
+        nodes_to_visit = list(range(len(self.distances)))
+        nodes_to_visit.remove(node)
 
-        for i in range(len(self.nodes) - 1):
-            close_node = min([self.distances[node][j] for j in nodes])
-            node = self.distances[node].index(close_node)
-            nodes.remove(node)
-            solution.append(node)
+        while nodes_to_visit:
+            nearest_node = min([(self.distances[node][j], j) for j in nodes_to_visit], key=lambda x: x[0])
+            node = nearest_node[1]
+            nodes_to_visit.remove(node)
+            result.append(node)
 
-        return solution
+        return result
+
+    # def initial_solution(self):
+    #     node = choice(self.nodes)
+    #     solution = [node]
+    #
+    #     nodes = list(self.nodes)
+    #     nodes.remove(node)
+    #
+    #     for i in range(len(self.nodes) - 1):
+    #         close_node = float('Inf')
+    #         for j in nodes:
+    #             if self.distances[node][j] < close_node:
+    #                 close_node = self.distances[node][j]
+    #
+    #         #close_node = min([self.distances[node][j] for j in nodes])
+    #         node = self.distances[node].index(close_node)
+    #         nodes.remove(node)
+    #         solution.append(node)
+    #
+    #     return solution
 
     def __randomize(self, candidate):
         l = randint(2, self.num_nodes - 1)
@@ -47,9 +71,9 @@ class SimulatedAnnealing(object):
         return [[self.__distance(coords[i], coords[j]) for i in range(len(coords))] for j in range(len(coords))]
 
     def __cost(self, solution):
-        dist = self.distances[solution[0]][solution[self.num_nodes - 1]]
+        dist = self.distances[solution[0]][solution[len(solution) - 1]]
 
-        for i in range(1, self.num_nodes):
+        for i in range(1, self.num_nodes - 1):
             dist += self.distances[solution[i - 1]][solution[i]]
         return dist
 
