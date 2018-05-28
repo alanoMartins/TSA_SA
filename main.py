@@ -3,19 +3,6 @@ import os.path
 from experiment import Experiment
 
 
-
-# def load_command():
-#     coordinates = []
-#
-#     for i in range(0, int(45)):
-#         line = [float(x.replace('\n','')) for x in re.sub("\s\s+", " ", input().strip()).split(' ')]
-#         print(line)
-#         coordinates.append([])
-#         for j in range(1,3):
-#             coordinates[i].append(line[j])
-#
-#     return coordinates
-
 def from_file(path):
     coordinates = []
     with open(path, 'r') as f:
@@ -39,14 +26,16 @@ def from_file(path):
             i += 1
     return name, type, dimensions, format, coordinates
 
+
 if __name__ == '__main__':
     INPUT_DIR = 'input/'
     OUTPUT_DIR = 'output/'
+    DEBUG = False
     files = next(os.walk(INPUT_DIR))[2]
 
     for file in files:
         print('\nRUN: {}'.format(file))
-        name, type_ex, dimensions, format, coordinates = from_file(INPUT_DIR + file)
+        name, type_ex, dimensions, format, coord = from_file(INPUT_DIR + file)
 
         if int(dimensions) > 2000:
             print("Too large 4 my PC =( ")
@@ -55,6 +44,6 @@ if __name__ == '__main__':
         print("Name: {name} \nType: {type}".format(name=name, type=type_ex))
         print("Dimensions: {dimensions} \nFormat: {format} ".format(dimensions=dimensions, format=format))
 
-        executer = Experiment(name, type_ex, dimensions, coordinates)
-        executer.run(OUTPUT_DIR + file.split('.')[0])
+        executer = Experiment(name, type_ex, dimensions, coord)
+        executer.run(OUTPUT_DIR + file.split('.')[0], DEBUG)
 

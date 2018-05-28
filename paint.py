@@ -4,8 +4,9 @@ import os
 
 class Painter():
 
-    def __init__(self, path):
+    def __init__(self, path, DEBUG=False):
         self.path = path
+        self.DEBUG = DEBUG
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -14,7 +15,8 @@ class Painter():
         self.plot_coords(coords)
         self.plotTSP([best_solution], coords)
         plt.savefig(self.path + '/path.png')
-        # plt.show()
+        if self.DEBUG:
+            plt.show()
 
     def plot_coords(self, coords):
         plt.subplot(2, 1, 1)
@@ -30,7 +32,8 @@ class Painter():
         plt.ylabel('Costs')
         plt.xlabel('Execution')
         fig.savefig(self.path + '/cost.png')
-        # plt.show()
+        if self.DEBUG:
+            plt.show()
 
     def plotTSP(self, paths, points):
         plt.subplot(2, 1, 2)

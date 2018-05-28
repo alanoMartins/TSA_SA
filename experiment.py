@@ -9,8 +9,8 @@ class Experiment:
         self.dimensions = dimensions
         self.coordinates = coordinates
 
-    def run(self, path):
-        painter = Painter(path)
+    def run(self, path, DEBUG=False):
+        painter = Painter(path, DEBUG=DEBUG)
         simulated_annealing = SimulatedAnnealing(self.coordinates, max_interations=5000000, alpha=0.9995,
                                                  min_temperature=0.00000001)
         solution, costs = simulated_annealing.execute()
